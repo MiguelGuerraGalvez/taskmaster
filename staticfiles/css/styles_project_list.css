@@ -3,23 +3,22 @@
     grid-template-columns: 1fr;
 }
 
-@media screen and (min-width: 425px) {
+@media screen and (min-width: 430px) {
     .main{
         grid-template-columns: 1fr 1fr;
+    }
+    .main__owner{
+        border-right: 2px solid black;
+    }
+
+    .main__collaborators{
+        border-left: 2px solid black;
     }
 }
 
 .main__owner, .main__collaborators{
     margin: 0 auto;
     padding: 0.5rem;
-}
-
-.main__owner{
-    border-right: 2px solid black;
-}
-
-.main__collaborators{
-    border-left: 2px solid black;
 }
 
 .owner__title, .collaborators__title{

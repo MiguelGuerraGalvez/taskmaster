@@ -29,8 +29,14 @@
 
 .tasks__task{
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 1fr;
     gap: 2rem;
+}
+
+@media screen and (min-width: 425px) {
+    .tasks__tasks{
+        grid-template-columns: 1fr 1fr;
+    }
 }
 
 .task__status{
