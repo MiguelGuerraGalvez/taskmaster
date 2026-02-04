@@ -1,0 +1,38 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crear Proyecto</title>
+    <link rel="stylesheet" href="{% static 'css/styles_base.css' %}">
+    <link rel="stylesheet" href="{% static 'css/styles_form.css' %}">
+</head>
+<body class="body">
+    <header class="header">
+        <nav class="nav">
+            <!-- <a href="{ url 'home' }">Inicio</a> -->
+            <a class="nav__link" href="{% url 'project_list' %}">Mis Proyectos</a>
+            <a class="nav__link" href="{% url 'project_create' %}">Crear Nuevo Proyecto</a>
+            <a class="nav__link" href="{% url 'task_create' %}">Crear Nueva Tarea</a>
+            <form id="logout-form" method="post" action="/logout/">
+                {% csrf_token %}
+                <button class="nav__link btn__session" type="submit">Cerrar Sesión</button>
+            </form>
+        </nav>
+    </header>
+
+    <main class="main">
+        <h1 class="main__title">Crear Nuevo Proyecto</h1>
+        <form class="main__form" method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button class="form__btn" type="submit">Crear Proyecto</button>
+        </form>
+    </main>
+
+    <section class="back">
+        <a class="back__link" href="javascript:history.back()">VOLVER</a>
+    </section>
+</body>
+</html>

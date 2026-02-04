@@ -1,0 +1,21 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Confirmar Eliminación</title>
+    <link rel="stylesheet" href="{% static 'css/styles_base.css' %}">
+    <link rel="stylesheet" href="{% static 'css/styles_delete.css' %}">
+</head>
+<body class="body">
+    <main class="main">
+        <h2 class="main__title">¿Estás seguro de que quieres eliminarlo?</h2>
+        <form class="main__form" method="post">
+            {% csrf_token %}
+            <button class="form__btn form__accept" type="submit">Sí, Eliminar</button>
+            <a class="form__btn form__cancel" href="javascript:history.back()">Cancelar</a>
+        </form>
+    </main>
+</body>
+</html>
