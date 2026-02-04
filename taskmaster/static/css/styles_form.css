@@ -13,15 +13,17 @@
 }
 
 .main__form{
-    /* margin: 0 auto;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-evenly; */
     display: flex;
     flex-direction: column;
     gap: 1rem;
     margin-bottom: 2rem;
-    width: 50%;
+    width: 100%;
+}
+
+@media screen and (min-width: 540px) {
+    .main__form{
+        width: 50%;
+    }
 }
 
 .main__form p{

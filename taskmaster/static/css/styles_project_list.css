@@ -3,7 +3,7 @@
     grid-template-columns: 1fr;
 }
 
-@media screen and (min-width: 430px) {
+@media screen and (min-width: 540px) {
     .main{
         grid-template-columns: 1fr 1fr;
     }

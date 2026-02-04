@@ -33,8 +33,8 @@
     gap: 2rem;
 }
 
-@media screen and (min-width: 425px) {
-    .tasks__tasks{
+@media screen and (min-width: 540px) {
+    .tasks__task{
         grid-template-columns: 1fr 1fr;
     }
 }
