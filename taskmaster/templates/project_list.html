@@ -1,0 +1,87 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Proyectos</title>
+    <link rel="stylesheet" href="{% static 'css/styles_base.css' %}">
+    <link rel="stylesheet" href="{% static 'css/styles_project_list.css' %}">
+</head>
+<body class="body">
+    <header class="header">
+        <nav class="nav">
+            <!-- <a href="{ url 'home' }">Inicio</a> -->
+            <a class="nav__link" href="{% url 'project_list' %}">Mis Proyectos</a>
+            <a class="nav__link" href="{% url 'project_create' %}">Crear Nuevo Proyecto</a>
+            <a class="nav__link" href="{% url 'task_create' %}">Crear Nueva Tarea</a>
+            <form id="logout-form" method="post" action="/logout/">
+                {% csrf_token %}
+                <button class="nav__link btn__session" type="submit">Cerrar Sesión</button>
+            </form>
+        </nav>
+    </header>
+
+    <main class="main">
+        <section class="main__owner">
+            <h1 class="owner__title">Mis Proyectos</h1>
+            <div class="owner_projects">
+                {% for project in user.owned_projects.all|dictsort:"deadline" %}
+                    <article class="projects__project">
+                        <h2>{{ project.title }}</h2>
+                        <p>Descripción: {{ project.description }}</p>
+                        <p>Creado en: {{ project.created_at }}</p>
+                        <p>Fecha límite: {{ project.deadline }}</p>
+                        <p>Creador: {{ project.owner }}</p>
+                        <p>Colaboradores: 
+                            {% for collaborator in project.collaborators.all %}
+                                {{ collaborator }} 
+                            {% empty %}
+                                No hay colaboradores
+                            {% endfor %}
+                        </p>
+                        <a class="project__link" href="{% url 'task_list' project.id %}">Hay {{ project.total_tasks }} tareas asignadas</a>
+                        <p>Hay {{ project.total_tasks_done }} tareas completadas</p>
+                        <div class="project__actions">
+                            <form action="/projects/update/{{ project.id }}" method="get">
+                                {% csrf_token %}
+                                <button class="project__btn project__update" type="submit">Editar Proyecto</button>
+                            </form>
+                            <form action="/projects/delete/{{ project.id }}" method="get">
+                                {% csrf_token %}
+                                <button class="project__btn project__delete" type="submit">Eliminar Proyecto</button>
+                            </form>
+                        </div>
+                    </article>
+                {% endfor %}
+            </div>
+        </section>
+
+        <section class="main__collaborators">
+            <h1 class="collaborators__title">Colaboraciones</h1>
+            <div class="collaborators__projects">
+                {% for project in user.collaborated_projects.all|dictsort:"deadline" %}
+                    <article>
+                        <h2>{{ project.title }}</h2>
+                        <p>Descripción: {{ project.description }}</p>
+                        <p>Creado en: {{ project.created_at }}</p>
+                        <p>Fecha límite: {{ project.deadline }}</p>
+                        <p>Creador: {{ project.owner }}</p>
+                        {% for collaborator in project.collaborators.all %}
+                            <p>Colaboradores: 
+                                {% for collaborator in project.collaborators.all %}
+                                    {{ collaborator }} 
+                                {% empty %}
+                                    No hay colaboradores
+                                {% endfor %}
+                            </p>
+                        {% endfor %}
+                        <a class="project__link" href="{% url 'task_list' project.id %}">Hay {{ project.total_tasks }} asignadas</a>
+                        <p>Hay {{ project.total_tasks_done }} tareas completadas</p>
+                    </article>
+                {% endfor %}
+            </div>
+        </section>
+    </main>
+</body>
+</html>

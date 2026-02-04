@@ -1,0 +1,23 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Iniciar Sesión</title>
+    <link rel="stylesheet" href="{% static 'css/styles_base.css' %}">
+    <link rel="stylesheet" href="{% static 'css/styles_login.css' %}">
+</head>
+<body class="body">
+    <main class="main">
+        <h1 class="main__title">Iniciar Sesión</h1>
+        <form class="main__form" method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button class="form__btn" type="submit">Iniciar Sesión</button>
+        </form>
+
+        <p>Si no tienes cuenta, <a href="/register/">regístrate aquí</a>.</p>
+    </main>
+</body>
+</html>

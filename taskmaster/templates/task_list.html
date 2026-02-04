@@ -1,0 +1,102 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tareas</title>
+    <link rel="stylesheet" href="{% static 'css/styles_base.css' %}">
+    <link rel="stylesheet" href="{% static 'css/styles_task_list.css' %}">
+</head>
+<body class="body">
+    <header class="header">
+        <nav class="nav">
+            <!-- <a href="{ url 'home' }">Inicio</a> -->
+            <a class="nav__link" href="{% url 'project_list' %}">Mis Proyectos</a>
+            <a class="nav__link" href="{% url 'project_create' %}">Crear Nuevo Proyecto</a>
+            <a class="nav__link" href="{% url 'task_create' %}">Crear Nueva Tarea</a>
+            <form id="logout-form" method="post" action="/logout/">
+                {% csrf_token %}
+                <button class="nav__link btn__session" type="submit">Cerrar Sesión</button>
+            </form>
+        </nav>
+    </header>
+
+    <div class="chart">
+        <canvas class="chart__pie" id="done_porcentaje" width="500" height="500"></canvas>
+    </div>
+
+    <main class="main">
+        <section class="main__tasks">
+            <h1 class="tasks__title">Tareas</h1>
+            <div class="tasks__task">
+                {% for task in tasks %}
+                    <article>
+                        <h2>{{ task.title }}</h2>
+                        <h3>{{ task.description }}</h3>
+                        <p>Proyecto: {{ task.project.title }}</p>
+                        <p>Descripción: {{ task.project.description }}</p>
+                        <p>Creado en: {{ task.project.created_at }}</p>
+                        <p>Fecha límite: {{ task.project.deadline }}</p>
+                        <p>Estado: {{ task.get_status_display }}</p>
+                        <div class="task__status">
+
+                            {% if task.status != 'TODO' %}
+                                <form action="{% url 'task_status' task.id 'TODO' %}" method="post">
+                                    {% csrf_token %}
+                                    <button class="task__btn task__todo" type="submit">Pendiente</button>
+                                </form>
+                            {% endif %}
+                            {% if task.status != 'IN_PROGRESS' %}
+                                <form action="{% url 'task_status' task.id 'IN_PROGRESS' %}" method="post">
+                                    {% csrf_token %}
+                                    <button class="task__btn task__inprog" type="submit">En Progreso</button>
+                                </form>
+                            {% endif %}
+                            {% if task.status != 'DONE' %}
+                                <form action="{% url 'task_status' task.id 'DONE' %}" method="post">
+                                    {% csrf_token %}
+                                    <button class="task__btn task__done" type="submit">Terminada</button>
+                                </form>
+                            {% endif %}
+                        </div>
+                        <p>Prioridad: {{ task.get_priority_display }}</p>
+                        <p>Creador: {{ task.project.owner }}</p>
+                        <p>Colaboradores: 
+                            {% for collaborator in task.project.collaborators.all %}
+                                {{ collaborator }} 
+                            {% empty %}
+                                No hay colaboradores
+                            {% endfor %}
+                        </p>
+                        <p>Asignada a: {{ task.assigned_to }}</p>
+                        {% if task.project.owner == user %}
+                            <div class="task__actions">
+                                <form action="/projects/tasks/update/{{ task.id }}" method="get">
+                                    {% csrf_token %}
+                                    <button class="task__btn task__update" type="submit">Editar Tarea</button>
+                                </form>
+                                <form action="/tasks/delete/{{ task.id }}" method="get">
+                                    {% csrf_token %}
+                                    <button class="task__btn task__delete" type="submit">Eliminar Tarea</button>
+                                </form>
+                            </div>
+                        {% endif %}
+                    </article>
+                {% endfor %}
+            </div>
+        </section>
+
+        <section class="back">
+            <a class="back__link" href="{% url 'project_list' %}">VOLVER</a>
+        </section>
+    </main>
+    
+    <script>
+        done_tasks = {{ done_tasks }}
+    not_done_tasks = 100 - done_tasks
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.2.1/dist/chart.umd.min.js"></script>
+    <script src="{% static 'js/pie_chart.js' %}"></script>
+</body>
+</html>
