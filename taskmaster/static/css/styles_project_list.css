@@ -1,6 +1,12 @@
 .main{
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 1fr;
+}
+
+@media screen and (min-width: 425px) {
+    .main{
+        grid-template-columns: 1fr 1fr;
+    }
 }
 
 .main__owner, .main__collaborators{
@@ -25,8 +31,14 @@
 .owner_projects, .collaborators__projects{
     display: grid;
     grid-auto-flow: row;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 1fr;
     gap: 2rem;
+}
+
+@media screen and (min-width: 768px) {
+    .owner_projects, .collaborators__projects{
+        grid-template-columns: 1fr 1fr;
+    }
 }
 
 .project__link{
