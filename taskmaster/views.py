@@ -8,8 +8,12 @@ from django.contrib.auth.models import User
 from django import forms
 from django.utils import timezone
 from django.db.models import Q
+from django.conf import settings
 
 # Create your views here.
+def error404(request, exception):
+    return render(request, '404.html')
+
 class HomeView(View):
     template_name = "home.html"
 

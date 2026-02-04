@@ -76,7 +76,11 @@
                                 {% endfor %}
                             </p>
                         {% endfor %}
-                        <a class="project__link" href="{% url 'task_list' project.id %}">Hay {{ project.total_tasks }} asignadas</a>
+                        {% if project.total_tasks > 0 %}
+                            <a class="project__link" href="{% url 'task_list' project.id %}">Hay {{ project.total_tasks }} asignadas</a>
+                        {% else %}
+                            <a class="project__link">Hay {{ project.total_tasks }} asignadas</a>
+                        {% endif %}
                         <p>Hay {{ project.total_tasks_done }} tareas completadas</p>
                     </article>
                 {% endfor %}

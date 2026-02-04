@@ -1,0 +1,17 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ERROR 404</title>
+    <link rel="stylesheet" href="{% static 'css/styles_base.css' %}">
+    <link rel="stylesheet" href="{% static 'css/styles_home.css' %}">
+</head>
+<body class="body">
+    <main class="main">
+        <h1 class="main__title">ERROR 404: Página no encontrada</h1>
+        <a class="main__link" href="{% url 'project_list' %}">VOLVER</a>
+    </main>
+</body>
+</html>

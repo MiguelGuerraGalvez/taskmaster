@@ -21,3 +21,5 @@ urlpatterns = [
     path('', include('taskmaster.urls')),
     path('admin/', admin.site.urls),
 ]
+
+handler404 = 'taskmaster.views.error404'
