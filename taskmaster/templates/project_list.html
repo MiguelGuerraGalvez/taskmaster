@@ -26,6 +26,7 @@
         <section class="main__owner">
             <h1 class="owner__title">Mis Proyectos</h1>
             <div class="owner_projects">
+                <!-- Mostramos los proyectos que ha creado el usuario -->
                 {% for project in user.owned_projects.all|dictsort:"deadline" %}
                     <article class="projects__project">
                         <h2>{{ project.title }}</h2>
@@ -34,6 +35,7 @@
                         <p>Fecha límite: {{ project.deadline }}</p>
                         <p>Creador: {{ project.owner }}</p>
                         <p>Colaboradores: 
+                            <!-- Mostramos los colaboradores del proyecto -->
                             {% for collaborator in project.collaborators.all %}
                                 {{ collaborator }} 
                             {% empty %}
@@ -60,6 +62,7 @@
         <section class="main__collaborators">
             <h1 class="collaborators__title">Colaboraciones</h1>
             <div class="collaborators__projects">
+                <!-- Mostramos los proyectos en los que colabora el usuario -->
                 {% for project in user.collaborated_projects.all|dictsort:"deadline" %}
                     <article>
                         <h2>{{ project.title }}</h2>
@@ -67,20 +70,15 @@
                         <p>Creado en: {{ project.created_at }}</p>
                         <p>Fecha límite: {{ project.deadline }}</p>
                         <p>Creador: {{ project.owner }}</p>
-                        {% for collaborator in project.collaborators.all %}
-                            <p>Colaboradores: 
-                                {% for collaborator in project.collaborators.all %}
-                                    {{ collaborator }} 
-                                {% empty %}
-                                    No hay colaboradores
-                                {% endfor %}
-                            </p>
-                        {% endfor %}
-                        {% if project.total_tasks > 0 %}
-                            <a class="project__link" href="{% url 'task_list' project.id %}">Hay {{ project.total_tasks }} asignadas</a>
-                        {% else %}
-                            <a class="project__link">Hay {{ project.total_tasks }} asignadas</a>
-                        {% endif %}
+                        <!-- Mostramos los colaboradores del proyecto -->
+                        <p>Colaboradores: 
+                            {% for collaborator in project.collaborators.all %}
+                                {{ collaborator }} 
+                            {% empty %}
+                                No hay colaboradores
+                            {% endfor %}
+                        </p>
+                        <a class="project__link" href="{% url 'task_list' project.id %}">Hay {{ project.total_tasks }} asignadas</a>
                         <p>Hay {{ project.total_tasks_done }} tareas completadas</p>
                     </article>
                 {% endfor %}

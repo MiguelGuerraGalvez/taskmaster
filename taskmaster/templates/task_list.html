@@ -30,6 +30,7 @@
         <section class="main__tasks">
             <h1 class="tasks__title">Tareas</h1>
             <div class="tasks__task">
+                <!-- Mostramos las tareas -->
                 {% for task in tasks %}
                     <article>
                         <h2>{{ task.title }}</h2>
@@ -40,7 +41,8 @@
                         <p>Fecha límite: {{ task.project.deadline }}</p>
                         <p>Estado: {{ task.get_status_display }}</p>
                         <div class="task__status">
-
+                            <!-- Dependiendo del estado de la tarea, se muestra un botón u otro para 
+                             cambiar el estod del proyecto -->
                             {% if task.status != 'TODO' %}
                                 <form action="{% url 'task_status' task.id 'TODO' %}" method="post">
                                     {% csrf_token %}
@@ -63,6 +65,7 @@
                         <p>Prioridad: {{ task.get_priority_display }}</p>
                         <p>Creador: {{ task.project.owner }}</p>
                         <p>Colaboradores: 
+                            <!-- Mostramos los colaboradores del proyecto asociado a la tarea -->
                             {% for collaborator in task.project.collaborators.all %}
                                 {{ collaborator }} 
                             {% empty %}
@@ -70,6 +73,8 @@
                             {% endfor %}
                         </p>
                         <p>Asignada a: {{ task.assigned_to }}</p>
+                        <!-- Si el usuario es el creador del proyecto relacionado a la tarea se le muestran las acciones de editar 
+                         y eliminar la tarea -->
                         {% if task.project.owner == user %}
                             <div class="task__actions">
                                 <form action="/projects/tasks/update/{{ task.id }}" method="get">
