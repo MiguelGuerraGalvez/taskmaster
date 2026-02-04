@@ -1,9 +1,9 @@
 from django.urls import path
-from .views import TaskCreateView, TasksDeleteView, LoginView, RegisterView, ProjectListView, ProjectCreateView, ProjectDeleteView, ProjectUpdateView, TaskUpdateStatus, TaskUpdateView, ProjectDetailView
+from .views import HomeView, TaskCreateView, TasksDeleteView, LoginView, RegisterView, ProjectListView, ProjectCreateView, ProjectDeleteView, ProjectUpdateView, TaskUpdateStatus, TaskUpdateView, ProjectDetailView
 from django.contrib.auth import views as auth_views
 
 urlpatterns = [
-    # path('', TaskListView.as_view(), name='home'), página de bienvenida
+    path('', HomeView.as_view(), name='home'),
     path('login/', LoginView.as_view(), name='login'),
     path('logout/', auth_views.LogoutView.as_view(), name='logout'),
     path('register/', RegisterView.as_view(), name='register'),

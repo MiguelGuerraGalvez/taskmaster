@@ -10,6 +10,12 @@ from django.utils import timezone
 from django.db.models import Q
 
 # Create your views here.
+class HomeView(View):
+    template_name = "home.html"
+
+    def get(self, request):
+        return render(request, self.template_name)
+
 class ProjectListView(LoginRequiredMixin, ListView):
     model = Project
     template_name = "project_list.html"

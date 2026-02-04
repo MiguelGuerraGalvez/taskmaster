@@ -1,0 +1,17 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bienvenida</title>
+    <link rel="stylesheet" href="{% static 'css/styles_base.css' %}">
+    <link rel="stylesheet" href="{% static 'styles_home.css' %}">
+</head>
+<body class="body">
+    <main class="main">
+        <h1 class="main__title">Bienvenido a Taskmaster</h1>
+        <a class="main__link" href="{% url 'project_list' %}">COMENZAR</a>
+    </main>
+</body>
+</html>
